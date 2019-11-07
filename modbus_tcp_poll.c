@@ -127,7 +127,7 @@ int demo_fun_01(void)
 #ifdef DEBUG_TX
         for (cnt=0; cnt < msg_len; cnt ++)
         {
-           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((char *)(&msg))[cnt]);
+           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((unsigned char *)(&msg))[cnt]);
         }
 #endif
 #ifdef DEBUG_RX
@@ -184,7 +184,7 @@ int demo_fun_02(void)
 #ifdef DEBUG_TX      
         for (cnt=0; cnt < msg_len; cnt ++)
         {
-           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((char *)(&msg))[cnt]);
+           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((unsigned char *)(&msg))[cnt]);
         }
 #endif
 #ifdef DEBUG_RX
@@ -240,7 +240,7 @@ int demo_fun_03(void)
 #ifdef DEBUG_TX     
         for (cnt=0; cnt < msg_len; cnt ++)
         {
-           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((char *)(&msg))[cnt]);
+           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((unsigned char *)(&msg))[cnt]);
         }
 #endif
 #ifdef DEBUG_RX
@@ -295,7 +295,7 @@ int demo_fun_04(void)
 #ifdef DEBUG_TX  
         for (cnt=0; cnt < msg_len; cnt ++)
         {
-           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((char *)(&msg))[cnt]);
+           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((unsigned char *)(&msg))[cnt]);
         }
 #endif
 #ifdef DEBUG_RX
@@ -353,7 +353,7 @@ int demo_fun_05(void)
 #ifdef DEBUG_TX  
         for (cnt=0; cnt < msg_len; cnt ++)
         {
-           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((char *)(&msg))[cnt]);
+           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((unsigned char *)(&msg))[cnt]);
         }
 #endif
 #ifdef DEBUG_RX
