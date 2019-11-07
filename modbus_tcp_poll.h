@@ -10,7 +10,3 @@ typedef struct modbus_poll_tx_msg{
 	unsigned char data1[256]; // cut data into two pieces in case of 64 bit alignment
 }modbus_poll_tx_msg;
 
-int modbusTCP_request(int client_socket);
-
-
-
