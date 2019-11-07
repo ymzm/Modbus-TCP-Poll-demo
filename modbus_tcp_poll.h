@@ -1,3 +1,7 @@
+
+#define DEBUG_TX
+#define DEBUG_RX
+
 typedef struct modbus_poll_tx_msg{
 	unsigned char msg_id[2];         // any value
 	unsigned char identification[2]; // set zero;

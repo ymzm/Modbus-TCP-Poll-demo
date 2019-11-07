@@ -15,8 +15,6 @@
 #include "modbus_tcp_poll.h"
 #define PORT 502
 
-#define DEBUG_TX
-#define DEBUG_RX
 
 int xfer_init(char *addr, int port)
 {
