@@ -319,6 +319,66 @@ int demo_fun_04(void)
     return 0;
 }
 
+
+int demo_fun_05(void)
+{
+    int s;
+    int recv,send;
+    unsigned char buff[1024];
+    modbus_poll_tx_msg msg;
+    unsigned int msg_id = 0;
+    unsigned int msg_len = 12;
+    unsigned int start_addr = 0;
+    unsigned int xfer_len = 0xff00; // 0xff00 open ;  0x0000 close
+    unsigned int slave_id = 1;
+    unsigned int function = 0x5;
+	
+    int cnt;
+    s = xfer_init("192.168.17.171", 502);
+	
+    build_msg(&msg, msg_id, msg_len, slave_id, function, start_addr, xfer_len, NULL, 0);
+
+    while(1)
+    {
+        send=write(s,(char *)&msg,msg_len);
+        if(send<0)
+        {
+            printf("send error\n");
+            return -1;
+        }
+        
+        recv=read(s,buff,1024); 
+        if(recv>0)
+        {
+            write(1,buff,recv);
+        }
+#ifdef DEBUG_TX  
+        for (cnt=0; cnt < msg_len; cnt ++)
+        {
+           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((char *)(&msg))[cnt]);
+        }
+#endif
+#ifdef DEBUG_RX
+        
+        for (cnt=0; cnt < recv; cnt ++)
+        {
+           printf("%d : rx buff[0x%x] = 0x%x\n", msg_id, cnt, buff[cnt]);
+        }
+#endif
+        
+        msg_id++;
+        msg.msg_id[0] = ((msg_id) >> 8) & 0xff;
+        msg.msg_id[1] = (msg_id) & 0xff;
+        sleep(2);
+    }
+    
+    xfer_end(s);
+    
+    return 0;
+}
+
+
+
 int main(void)
 {
     int choice;
@@ -329,7 +389,7 @@ int main(void)
         case 2: demo_fun_02(); break;
         case 3: demo_fun_03(); break;
         case 4: demo_fun_04(); break;
-        // case 5: demo_fun_05(); break;
+        case 5: demo_fun_05(); break;
         default: break;
     }    
 
