@@ -367,6 +367,7 @@ int demo_fun_05(void)
         msg_id++;
         msg.msg_id[0] = ((msg_id) >> 8) & 0xff;
         msg.msg_id[1] = (msg_id) & 0xff;
+        msg.xfer_len[0] = ((msg_id % 2) ? 0 : 0xff);
         sleep(2);
     }
     
