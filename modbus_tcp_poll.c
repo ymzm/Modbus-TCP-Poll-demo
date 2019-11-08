@@ -393,7 +393,7 @@ int demo_fun_0f(void)
     int cnt;
     s = xfer_init("192.168.17.171", 502);
 	
-	unsigned char data[3] = 0; // 3 is calculated by 1+(10/8)+ (10%8)?1:0
+	unsigned char data[3] = {0}; // 3 is calculated by 1+(10/8)+ (10%8)?1:0
 	
 	data[0] = 2;
 	data[1] = 0;
@@ -405,7 +405,7 @@ int demo_fun_0f(void)
 	
 	
 	
-    build_msg(&msg, msg_id, msg_len, slave_id, function, start_addr, xfer_len, &data, 3);
+    build_msg(&msg, msg_id, msg_len, slave_id, function, start_addr, xfer_len, data, 3);
 
     while(1)
     {
