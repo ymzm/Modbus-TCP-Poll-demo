@@ -377,6 +377,78 @@ int demo_fun_05(void)
 }
 
 
+int demo_fun_0f(void)
+{
+    int s;
+    int recv,send;
+    unsigned char buff[1024];
+    modbus_poll_tx_msg msg;
+    unsigned int msg_id = 0;
+    unsigned int msg_len = 15;
+    unsigned int start_addr = 0;
+    unsigned int xfer_len = 10; // modify 10 coils' status
+    unsigned int slave_id = 1;
+    unsigned int function = 0xf;
+	
+    int cnt;
+    s = xfer_init("192.168.17.171", 502);
+	
+	unsigned char data[3] = 0; // 3 is calculated by 1+(10/8)+ (10%8)?1:0
+	
+	data[0] = 2;
+	data[1] = 0;
+	data[2] = 0;
+	//for (cnt = 0; cnt < 10; cnt ++)
+	//{
+	//	data += 1 << cnt;
+	//}
+	
+	
+	
+    build_msg(&msg, msg_id, msg_len, slave_id, function, start_addr, xfer_len, &data, 3);
+
+    while(1)
+    {
+        send=write(s,(char *)&msg,msg_len);
+        if(send<0)
+        {
+            printf("send error\n");
+            return -1;
+        }
+        
+        recv=read(s,buff,1024); 
+        if(recv>0)
+        {
+            write(1,buff,recv);
+        }
+#ifdef DEBUG_TX  
+        for (cnt=0; cnt < msg_len; cnt ++)
+        {
+           printf("%d : tx  msg[0x%x] = 0x%x\n", msg_id, cnt, ((unsigned char *)(&msg))[cnt]);
+        }
+#endif
+#ifdef DEBUG_RX
+        
+        for (cnt=0; cnt < recv; cnt ++)
+        {
+           printf("%d : rx buff[0x%x] = 0x%x\n", msg_id, cnt, buff[cnt]);
+        }
+#endif
+        
+        msg_id++;
+        msg.msg_id[0] = ((msg_id) >> 8) & 0xff;
+        msg.msg_id[1] = (msg_id) & 0xff;
+        //msg.xfer_len[0] = ((msg_id % 2) ? 0 : 0xff);
+		msg.data[1] = ~msg.data[1];
+		msg.data[2] = ~msg.data[2];
+        sleep(2);
+    }
+    
+    xfer_end(s);
+    
+    return 0;
+}
+
 
 int main(void)
 {
@@ -389,6 +461,7 @@ int main(void)
         case 3: demo_fun_03(); break;
         case 4: demo_fun_04(); break;
         case 5: demo_fun_05(); break;
+		case 15: demo_fun_0f(); break;
         default: break;
     }    
 
